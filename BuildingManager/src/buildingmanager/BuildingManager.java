@@ -51,11 +51,11 @@ public class BuildingManager {
                     }
                     case 3: {
                         mostrar(copropietario);
-                        
+
                         break;
                     }
                     case 4: {
-ActualizarDatos(copropietario);
+                        ActualizarDatos(copropietario);
                         break;
                     }
                     case 5: {
@@ -188,27 +188,23 @@ ActualizarDatos(copropietario);
         for (int i = 0; i < Arra.length; i++) {
             for (int j = 0; j < Arra[i].length; j++) {
 
-                if (Arra[i][0].equals(nombreNuevo) && Arra[i][1].equals(ApellidoNuevo) && Arra[i][2].equals(n)){
-            
-            JOptionPane.showMessageDialog(null, "Exite el copropietario. Nombre del nuevo copropietario");
+                if (Arra[i][0].equals(nombreNuevo) && Arra[i][1].equals(ApellidoNuevo) && Arra[i][2].equals(n)) {
+                    JOptionPane.showMessageDialog(null, "Exite el copropietario. Nombre del nuevo copropietario");
+                    Arra[i][0] = nombreCopropietario();
+                    Arra[i][1] = apellidoCopropietario();
+                    Arra[i][2] = ""+numDepartamento();
+                    ;
 
-            Arra[i][0
-                    
-                    ] = nombreCopropietario();
-            Arra[i][1
-                    
-                    ] = apellidoCopropietario();  //cont
-            Arra[i][2] = "" + numDepartamento();
-            break;
-                
-        }
+                    break;
+
+                }
             }
-      
+
+        }
+        return Arra;
     }
-  return Arra;
-}
-    
-     public static int Salir() {
+
+    public static int Salir() {
         int opcion = Integer.parseInt(JOptionPane.showInputDialog(null, (Object) "Deseas salir:\n1.Si\n 2.No"));
         if (opcion == 1) {
             System.exit(0);
