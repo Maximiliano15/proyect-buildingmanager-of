@@ -25,7 +25,7 @@ public class BuildingManager {
 
     public static void menu() {
         String[][] copropietario = new String[10][8];
-
+        int restante = 0;
         int op = 0;
         int bodega = 20;
         int cale = 2000;
@@ -36,27 +36,30 @@ public class BuildingManager {
         do {
 
             try {
-                op = Integer.parseInt(JOptionPane.showInputDialog("1. Gasto del los copropietarios\n 2. Pagar\n 3. mostrar\n 4. Actualizar"));
+                op = Integer.parseInt(JOptionPane.showInputDialog("1. Ingresar copropietarios\n 2. Pagar\n 3. mostrar\n 4. Actualizar\n 5. Salir"));
                 switch (op) {
                     case 1: {
 
-                        ingresar(a, copropietario, gas, bodega, cale, estac, montopagar(gas, bodega, cale, estac));//momto actualizado);
+                        ingresar(a, copropietario, gas, bodega, cale, estac, restante);//momto actualizado);
                         a++;
                         break;
                     }
                     case 2: {
 
-                        JOptionPane.showMessageDialog(null, pagar(montopagar(gas, bodega, cale, estac), dineroCopr()));
+                        JOptionPane.showMessageDialog(null, pagar(restante, montopagar(gas, bodega, cale, estac, restante), dineroCopr()));
                         break;
                     }
                     case 3: {
                         mostrar(copropietario);
-                       
+                        
                         break;
                     }
                     case 4: {
-                           ActualizarDatos(copropietario);
+ActualizarDatos(copropietario);
                         break;
+                    }
+                    case 5: {
+                        Salir();
                     }
                     default: {
                         JOptionPane.showMessageDialog(null, "opcion invalida");
@@ -100,24 +103,27 @@ public class BuildingManager {
         return numdepto;
     }
 
-    public static int montopagar(int gastosC, int bodega, int cale, int estac) {
+    public static int montopagar(int gastosC, int bodega, int cale, int estac, int restan) {
 
-        int total = gastosC + bodega + cale + estac;
-        return total;
+        restan = gastosC + bodega + cale + estac;
+        return restan;
 
     }
 
-    public static int pagar(int deuda, int dinero) {
-        int restante = (deuda - dinero);
+    public static int pagar(int restante, int deuda, int dinero) {
+        int resultado = 0;
+        restante = (deuda - dinero);
 
-        if (restante == 0) {
+        if (restante == 0 || restante < 0) {
             JOptionPane.showMessageDialog(null, "Su deuda a sido cancelada en su totalidad");
+            resultado = 0;
         } else if (restante > 0) {
             JOptionPane.showMessageDialog(null, "Usted a abonado: " + dinero + ", su  deuda queda en: " + restante);
+            resultado = 0 + restante;
         } else {
             JOptionPane.showMessageDialog(null, "su vuelto es de: " + (-restante));
         }
-        return restante;
+        return resultado;
     }
 
     public static int dineroCopr() {
@@ -137,7 +143,7 @@ public class BuildingManager {
         return dinero;
     }
 
-    public static void ingresar(int s, String[][] arreglo, int gasto_com, int bodeg, int estacionamient, int calef, int monto) {
+    public static void ingresar(int s, String[][] arreglo, int gasto_com, int bodeg, int estacionamient, int calef, int res) {
 
         arreglo[s][0] = nombreCopropietario();
         arreglo[s][1] = apellidoCopropietario();
@@ -146,7 +152,7 @@ public class BuildingManager {
         arreglo[s][4] = "" + bodeg;
         arreglo[s][5] = "" + estacionamient;
         arreglo[s][6] = "" + calef;
-        arreglo[s][7] = "" + montopagar(gasto_com, bodeg, calef, estacionamient);
+        arreglo[s][7] = "" + pagar(res, montopagar(gasto_com, bodeg, calef, estacionamient, res), dineroCopr());
 
         for (int i = 0; i < arreglo.length; i++) {
 
@@ -175,26 +181,38 @@ public class BuildingManager {
 
     public static String[][] ActualizarDatos(String[][] Arra) {
         int op = 0;
-        
+
         String nombreNuevo = nombreCopropietario();
         String ApellidoNuevo = apellidoCopropietario();
         String n = "" + numDepartamento();
         for (int i = 0; i < Arra.length; i++) {
             for (int j = 0; j < Arra[i].length; j++) {
-                
-                if (Arra[i][0].equals(nombreNuevo) && Arra[i][1].equals(ApellidoNuevo) && Arra[i][2].equals(n));
-            }
-                JOptionPane.showMessageDialog(null, "Exite el copropietario. Nombre del nuevo copropietario");
 
-                Arra[i][0] = nombreCopropietario();
-                Arra[i][1] = apellidoCopropietario();  //cont
-                Arra[i][2] = "" + numDepartamento();
-                break;
+                if (Arra[i][0].equals(nombreNuevo) && Arra[i][1].equals(ApellidoNuevo) && Arra[i][2].equals(n)){
             
+            JOptionPane.showMessageDialog(null, "Exite el copropietario. Nombre del nuevo copropietario");
 
+            Arra[i][0
+                    
+                    ] = nombreCopropietario();
+            Arra[i][1
+                    
+                    ] = apellidoCopropietario();  //cont
+            Arra[i][2] = "" + numDepartamento();
+            break;
+                
         }
-
-        return Arra;
+            }
+      
     }
-
+  return Arra;
+}
+    
+     public static int Salir() {
+        int opcion = Integer.parseInt(JOptionPane.showInputDialog(null, (Object) "Deseas salir:\n1.Si\n 2.No"));
+        if (opcion == 1) {
+            System.exit(0);
+        }
+        return opcion;
+    }
 }
