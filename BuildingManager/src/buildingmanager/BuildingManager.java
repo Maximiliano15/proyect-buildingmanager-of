@@ -25,6 +25,7 @@ public class BuildingManager {
 
     public static void menu() {
         String[][] copropietario = new String[10][8];
+        int ac = 0;
         int restante = 0;
         int op = 0;
         int bodega = 20;
@@ -34,8 +35,8 @@ public class BuildingManager {
         int a = 0;
 
         do {
-
             try {
+
                 op = Integer.parseInt(JOptionPane.showInputDialog("1. Ingresar copropietarios\n 2. Pagar\n 3. mostrar\n 4. Actualizar\n 5. Salir"));
                 switch (op) {
                     case 1: {
@@ -45,13 +46,12 @@ public class BuildingManager {
                         break;
                     }
                     case 2: {
-
-                        JOptionPane.showMessageDialog(null, pagar(restante, montopagar(gas, bodega, cale, estac, restante), dineroCopr()));
+ pagar(copropietario, restante, montopagar(gas, bodega, cale, estac, restante));
                         break;
                     }
                     case 3: {
                         mostrar(copropietario);
-
+                       
                         break;
                     }
                     case 4: {
@@ -68,9 +68,10 @@ public class BuildingManager {
                 }
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "invalida su opcion");
+                JOptionPane.showMessageDialog(null, "error");
             }
-        } while (op <= 7);
+
+        } while (op <= 5);
     }
 
     public static String nombreCopropietario() {
@@ -110,20 +111,30 @@ public class BuildingManager {
 
     }
 
-    public static int pagar(int restante, int deuda, int dinero) {
+    public static String[][] pagar(String[][] Array, int restante, int deuda) {
         int resultado = 0;
-        restante = (deuda - dinero);
+        String nombreNuevo = nombreCopropietario();
+        String ApellidoNuevo = apellidoCopropietario();
+        String nd = "" + numDepartamento();
+        for (int m = 0; m < Array.length; m++) {
+            for (int n = 0; n < Array[m].length; n++) {
+                if (Array[m][0].equals(nombreNuevo) && Array[m][1].equals(ApellidoNuevo) && Array[m][2].equals(nd)) {
+                    resultado = (deuda - dineroCopr());
 
-        if (restante == 0 || restante < 0) {
-            JOptionPane.showMessageDialog(null, "Su deuda a sido cancelada en su totalidad");
-            resultado = 0;
-        } else if (restante > 0) {
-            JOptionPane.showMessageDialog(null, "Usted a abonado: " + dinero + ", su  deuda queda en: " + restante);
-            resultado = 0 + restante;
-        } else {
-            JOptionPane.showMessageDialog(null, "su vuelto es de: " + (-restante));
+                    if (restante == 0 || restante < 0) {
+                        JOptionPane.showMessageDialog(null, "Su deuda a sido cancelada en su totalidad");
+                        resultado = 0;
+                    } else if (restante > 0) {
+                        JOptionPane.showMessageDialog(null, "Usted a abonado: " + ", su  deuda queda en: " + restante);
+                        resultado = 0 + restante;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "su vuelto es de: " + (-restante));
+                    }
+                }
+            }
         }
-        return resultado;
+
+        return Array;
     }
 
     public static int dineroCopr() {
@@ -152,7 +163,7 @@ public class BuildingManager {
         arreglo[s][4] = "" + bodeg;
         arreglo[s][5] = "" + estacionamient;
         arreglo[s][6] = "" + calef;
-        arreglo[s][7] = "" + pagar(res, montopagar(gasto_com, bodeg, calef, estacionamient, res), dineroCopr());
+        arreglo[s][7] = "" + montopagar(gasto_com, bodeg, calef, estacionamient, res);
 
         for (int i = 0; i < arreglo.length; i++) {
 
@@ -192,8 +203,7 @@ public class BuildingManager {
                     JOptionPane.showMessageDialog(null, "Exite el copropietario. Nombre del nuevo copropietario");
                     Arra[i][0] = nombreCopropietario();
                     Arra[i][1] = apellidoCopropietario();
-                    Arra[i][2] = ""+numDepartamento();
-                    ;
+                    Arra[i][2] = "" + numDepartamento();
 
                     break;
 
